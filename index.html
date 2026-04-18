@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pixel Farm</title>
+    <style>
+        body { background: #222; color: white; text-align: center; font-family: sans-serif; }
+        canvas { border: 2px solid #555; background: white; cursor: crosshair; image-rendering: pixelated; }
+        .stats { margin: 20px; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="stats">Коины: <span id="balance">0</span> | Лимит: 3ч в день</div>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const balanceEl = document.getElementById('balance');
+
+        // Рисуем пиксель при клике
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor(e.clientX - rect.left);
+            const y = Math.floor(e.clientY - rect.top);
+            socket.emit('draw_pixel', { x, y, color: 'red' }); // Пока только красный
+        });
+
+        socket.on('update_balance', (coins) => {
+            balanceEl.innerText = coins;
+        });
+
+        socket.on('init_canvas', (pixels) => {
+            for (let key in pixels) {
+                const [x, y] = key.split(',');
+                draw(x, y, pixels[key]);
+            }
+        });
+
+        socket.on('pixel_updated', (data) => {
+            draw(data.x, data.y, data.color);
+        });
+
+        function draw(x, y, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 1, 1);
+        }
+    </script>
+</body>
+</html>
