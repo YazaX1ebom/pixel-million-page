@@ -1,0 +1,288 @@
+/* ============================================================
+   THE MILLION PIXEL PAGE - OFFICIAL STYLESHEET (RETRO EDITION)
+   ============================================================ */
+
+:root {
+    --bg-desktop: #3a6ea5;      /* Классический синий цвет рабочего стола */
+    --win-bg: #c0c0c0;          /* Серый цвет окон */
+    --win-blue: #000080;        /* Темно-синий заголовок */
+    --win-border-light: #ffffff;
+    --win-border-dark: #808080;
+    --win-border-deep: #404040;
+    --text-main: #000000;
+    --link-color: #0000ee;
+    --success-green: #008000;
+    --error-red: #ff0000;
+}
+
+/* Общие настройки страницы */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-desktop);
+    font-family: "Tahoma", "Verdana", sans-serif;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    image-rendering: pixelated;
+    overflow-x: hidden;
+}
+
+/* Верхний бегущий текст (Марки) */
+.ticker-wrap {
+    width: 100%;
+    background: #000;
+    color: #0f0;
+    border-bottom: 2px solid var(--win-border-dark);
+    font-family: 'Courier New', monospace;
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+/* Главный заголовок в стиле логотипа */
+.main-header {
+    background: #fff;
+    border: 3px solid #000;
+    margin: 20px 0;
+    padding: 20px 50px;
+    text-align: center;
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
+}
+
+.main-header h1 {
+    font-family: "Impact", sans-serif;
+    font-size: 60px;
+    color: #d00;
+    margin: 0;
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 0 #000;
+}
+
+/* Навигационная панель */
+nav {
+    width: 1000px;
+    background: var(--win-bg);
+    border: 2px solid;
+    border-color: var(--win-border-light) var(--win-border-dark) var(--win-border-dark) var(--win-border-light);
+    display: flex;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+nav a {
+    padding: 5px 15px;
+    color: var(--link-color);
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+nav a:hover {
+    background: var(--win-blue);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Тулбар (Панель управления) */
+#toolbar {
+    width: 1000px;
+    background: var(--win-bg);
+    border: 2px solid;
+    border-color: var(--win-border-light) var(--win-border-dark) var(--win-border-dark) var(--win-border-light);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+.status-panel {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.lcd-display {
+    background: #000;
+    color: #0f0;
+    padding: 5px 10px;
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+    border: 2px inset var(--win-border-dark);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Контейнер холста */
+#canvas-wrapper {
+    position: relative;
+    width: 1000px;
+    height: 1000px;
+    background: #fff;
+    border: 2px solid #000;
+    overflow: hidden; /* Сетка 1000x1000 огромная, фиксируем размер */
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+}
+
+#main-canvas {
+    display: block;
+    cursor: crosshair;
+}
+
+/* Стили окон (Windows 98 Style) */
+.win-98 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--win-bg);
+    border: 2px solid;
+    border-color: var(--win-border-light) var(--win-border-dark) var(--win-border-dark) var(--win-border-light);
+    width: 450px;
+    z-index: 9999;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.4);
+    display: none; /* Скрыто по умолчанию */
+}
+
+.win-98-title {
+    background: var(--win-blue);
+    color: #fff;
+    padding: 3px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.win-98-btn-close {
+    width: 16px;
+    height: 14px;
+    background: var(--win-bg);
+    border: 1px solid #000;
+    color: #000;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.win-98-body {
+    padding: 15px;
+}
+
+/* Формы ввода */
+.win-98-body label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.win-98-body input[type="text"],
+.win-98-body input[type="password"] {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 15px;
+    border: 2px inset var(--win-border-dark);
+    background: #fff;
+    box-sizing: border-box;
+}
+
+/* Кнопки */
+.btn-retro {
+    padding: 6px 20px;
+    background: var(--win-bg);
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-retro:active {
+    border-color: #808080 #fff #fff #808080;
+    padding: 7px 19px 5px 21px;
+}
+
+/* Таблица ТОП-15 */
+.top-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 12px;
+}
+
+.top-table th {
+    background: var(--win-border-light);
+    border: 1px solid var(--win-border-dark);
+    padding: 4px;
+    text-align: left;
+}
+
+.top-table td {
+    border: 1px solid #ccc;
+    padding: 4px;
+}
+
+.top-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Всплывающая подсказка пикселя */
+#pixel-tooltip {
+    position: fixed;
+    background: #ffffca;
+    border: 1px solid #000;
+    padding: 8px;
+    font-size: 11px;
+    pointer-events: none;
+    z-index: 10000;
+    display: none;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+}
+
+/* Рамка выделения области */
+#selection-box {
+    position: absolute;
+    border: 1px dashed #ff0000;
+    background: rgba(255, 0, 0, 0.1);
+    display: none;
+    pointer-events: none;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 16px;
+    background-color: var(--win-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--win-bg);
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+}
+
+/* Анимация мигания для критических сообщений */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.blink-text {
+    animation: blink 1s infinite;
+    color: red;
+    font-weight: bold;
+}
+
+/* Футер */
+footer {
+    width: 1000px;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 50px;
+}

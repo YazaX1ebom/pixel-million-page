@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>The Million Pixel Farm | Официальный сайт</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <div class="ticker-wrap">
+        <marquee scrollamount="5">
+            ДОБРО ПОЖАЛОВАТЬ НА MILLION PIXEL FARM • 1 ПИКСЕЛЬ = 1 КОИН • ФАРМИТЕ ДО 60 КОИНОВ В ДЕНЬ • РЕГИСТРИРУЙТЕСЬ, ЧТОБЫ СОХРАНИТЬ ПРОГРЕСС • ВЫДЕЛЯЙТЕ ОБЛАСТИ ДЛЯ МАССОВОЙ ЗАСТРОЙКИ!
+        </marquee>
+    </div>
+
+    <header class="main-header">
+        <h1>THE MILLION PIXEL FARM</h1>
+        <p><i>Место, где каждый пиксель имеет значение. Стань частью истории!</i></p>
+    </header>
+
+    <div id="auth-window" class="win-98" style="display: block;">
+        <div class="win-98-title">
+            <span>Вход в систему управления</span>
+        </div>
+        <div class="win-98-body">
+            <p>Для доступа к холсту и фарму коинов необходимо авторизоваться.</p>
+            <div style="margin: 15px 0;">
+                <label for="login-name">Имя пользователя (Login):</label>
+                <input type="text" id="login-name" placeholder="Введите никнейм...">
+                
+                <label for="login-pass">Пароль (Password):</label>
+                <input type="password" id="login-pass" placeholder="Введите пароль...">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn-retro" onclick="authAction('login')">Войти</button>
+                <button class="btn-retro" onclick="authAction('register')">Создать аккаунт</button>
+            </div>
+            <p id="auth-error" class="blink-text" style="display: none; margin-top: 10px;"></p>
+        </div>
+    </div>
+
+    <div id="toolbar">
+        <div class="status-panel">
+            <span>БАЛАНС:</span>
+            <div id="coin-balance" class="lcd-display">0000</div>
+            <span>КОИНОВ</span>
+        </div>
+
+        <div class="status-panel">
+            <span>ДО СЛЕДУЮЩЕГО ФАРМА:</span>
+            <div id="farm-countdown" class="lcd-display">60s</div>
+        </div>
+
+        <div class="status-panel">
+            <span>ЛИМИТ НА СЕГОДНЯ:</span>
+            <div id="daily-limit" class="lcd-display">60/60</div>
+        </div>
+        
+        <div class="status-panel">
+            <span id="current-user-tag" style="font-weight: bold; color: var(--win-blue);">[ГОСТЬ]</span>
+            <button class="btn-retro" onclick="location.reload()">Выйти</button>
+        </div>
+    </div>
+
+    <nav>
+        <a onclick="showMenu('buy')">Купить Область</a>
+        <a onclick="showMenu('top')">Топ 15 Участников</a>
+        <a onclick="showMenu('rules')">Правила Фермы</a>
+        <a onclick="scrollToCanvas()">К Холсту</a>
+    </nav>
+
+    <div id="win-top" class="win-98">
+        <div class="win-98-title">
+            <span>Таблица Лидеров (Топ 15)</span>
+            <div class="win-98-btn-close" onclick="hideMenu('top')">X</div>
+        </div>
+        <div class="win-98-body">
+            <table class="top-table">
+                <thead>
+                    <tr>
+                        <th>Место</th>
+                        <th>Участник</th>
+                        <th>Пикселей поставлено</th>
+                    </tr>
+                </thead>
+                <tbody id="top-list-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="win-buy" class="win-98">
+        <div class="win-98-title">
+            <span>Инструмент массовой застройки</span>
+            <div class="win-98-btn-close" onclick="hideMenu('buy')">X</div>
+        </div>
+        <div class="win-98-body">
+            <p>Выделите область на холсте <b>правой кнопкой мыши</b>.</p>
+            <hr>
+            <div style="margin: 10px 0;">
+                <label>Цвет заливки:</label>
+                <input type="color" id="area-color-picker" value="#ff0000" style="width: 100%; height: 40px;">
+            </div>
+            <div id="area-info" style="font-size: 11px; color: #555; margin-bottom: 10px;">
+                Область не выбрана.
+            </div>
+            <button class="btn-retro" id="btn-confirm-area" style="width: 100%; font-weight: bold;" disabled onclick="processAreaPurchase()">
+                ПОДТВЕРДИТЬ ПОКУПКУ
+            </button>
+        </div>
+    </div>
+
+    <main id="canvas-wrapper">
+        <div id="selection-box"></div>
+        <div id="pixel-tooltip"></div>
+        
+        <canvas id="main-canvas" width="1000" height="1000"></canvas>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 THE MILLION PIXEL FARM. ПЛАТФОРМА ДЛЯ ТВОРЧЕСТВА И БИЗНЕСА.</p>
+        <p>ВСЕ ПРАВА ЗАЩИЩЕНЫ. ЛИМИТ ФАРМА ОБНУЛЯЕТСЯ КАЖДЫЕ 24 ЧАСА.</p>
+    </footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
