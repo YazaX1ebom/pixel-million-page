@@ -368,14 +368,27 @@ footer {
     z-index: 999999 !important; /* Поверх всего */
 }
 
-/* Окно должно быть непрозрачным */
+#auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9) !important; /* Очень темный фон */
+    display: flex !important; /* Принудительно показываем */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000000 !important; /* Максимальный приоритет поверх всего */
+    visibility: visible !important;
+}
+
 #auth-window {
-    background: #c0c0c0 !important; /* Серый цвет Windows 98 */
+    background: #c0c0c0 !important; /* Фирменный серый цвет Win98 */
     border: 2px solid #fff;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-    min-width: 300px;
-    padding: 10px;
-    color: black;
+    padding: 20px;
+    min-width: 320px;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.8);
+    display: block !important;
 }
 
 /* Скрываем основной контент, пока не вошли (по желанию) */
