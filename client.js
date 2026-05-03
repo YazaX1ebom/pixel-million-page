@@ -1,60 +1,52 @@
-// Автоматическое определение адреса сервера
-const socket = io(); 
+const socket = io();
 
+// Элементы
 const authOverlay = document.getElementById('auth-overlay');
 const statusMsg = document.getElementById('status-msg');
 
-// ПРОВЕРКА СОЕДИНЕНИЯ (Добавлено для диагностики)
-socket.on('connect', () => {
-    console.log("Соединение с сервером установлено!");
-    statusMsg.style.color = "gray";
-    statusMsg.innerText = "Система готова к работе";
-});
-
-socket.on('connect_error', () => {
-    statusMsg.style.color = "red";
-    statusMsg.innerText = "ОШИБКА: Сервер недоступен. Проверь логи Render!";
-});
-
-// ФУНКЦИЯ ВХОДА/РЕГИСТРАЦИИ
+// Функция отправки (вызывается из HTML)
 window.submitAuth = function() {
-    const login = document.getElementById('username').value.trim();
-    const pass = document.getElementById('password').value.trim();
+    const login = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    // Определяем режим по тексту кнопки
+    const isReg = document.getElementById('auth-main-btn').innerText.includes("Создать");
 
-    if (!login || !pass) {
-        statusMsg.innerText = "Введите логин и пароль!";
-        statusMsg.style.color = "red";
-        return;
-    }
-
-    // Если это регистрация (проверяем по тексту на кнопке)
-    const isReg = document.getElementById('auth-main-btn').innerText.includes("аккаунт");
-    
-    statusMsg.style.color = "blue";
-    statusMsg.innerText = isReg ? "Создаю аккаунт..." : "Вхожу...";
+    if(!login || !pass) return alert("Заполните поля!");
 
     socket.emit('auth', { login, pass, isReg });
 };
 
-// ОТВЕТЫ СЕРВЕРА
+// СЛУШАЕМ ОТВЕТЫ СЕРВЕРА
 socket.on('auth_done', (data) => {
-    statusMsg.style.color = "green";
-    statusMsg.innerText = "Успешно! Входим...";
-    setTimeout(() => {
-        authOverlay.style.display = 'none';
-        document.getElementById('user-name').innerText = data.login;
-        document.getElementById('balance').innerText = data.coins;
-    }, 600);
-});
-
-socket.on('error_msg', (msg) => {
-    statusMsg.style.color = "red";
-    statusMsg.innerText = msg;
+    // 1. Окно пропадает
+    authOverlay.style.display = 'none';
+    // 2. Разблокируем интерфейс
+    document.getElementById('main-site-content').style.filter = 'none';
+    // 3. Выводим данные
+    document.getElementById('user-name').innerText = data.login;
+    document.getElementById('balance').innerText = data.coins;
 });
 
 socket.on('success_auth', (msg) => {
-    statusMsg.style.color = "green";
-    statusMsg.innerText = msg + " Теперь нажмите 'Войти'";
-    // Автоматически переключаем на вход после регистрации
-    window.switchAuth('login');
+    alert(msg + " Теперь нажмите 'Войти'");
+    window.switchAuth('login'); // Переключаем вкладку автоматически
 });
+
+socket.on('error_msg', (msg) => {
+    statusMsg.innerText = msg;
+    statusMsg.style.color = "red";
+});
+
+// Переключатель вкладок
+window.switchAuth = function(mode) {
+    const btn = document.getElementById('auth-main-btn');
+    if (mode === 'reg') {
+        btn.innerText = "Создать аккаунт";
+        document.getElementById('tab-reg').classList.add('active');
+        document.getElementById('tab-login').classList.remove('active');
+    } else {
+        btn.innerText = "Войти в систему";
+        document.getElementById('tab-login').classList.add('active');
+        document.getElementById('tab-reg').classList.remove('active');
+    }
+};
