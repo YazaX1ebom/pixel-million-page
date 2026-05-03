@@ -1,1 +1,73 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>The Million Pixel Farm | Официальный сайт</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем Socket.io ПЕРЕД нашим скриптом -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+    <!-- Оверлей для блокировки сайта до логина -->
+    <div id="auth-overlay">
+    <div id="auth-window" class="win-98">
+        <div class="win-98-title"><span>Вход в систему</span></div>
+        <div class="win-98-body">
+            <div class="auth-tabs">
+                <button id="tab-login" class="active" onclick="switchAuth('login')">Вход</button>
+                <button id="tab-reg" onclick="switchAuth('reg')">Регистрация</button>
+            </div>
+            <input type="text" id="username" placeholder="Логин">
+            <input type="password" id="password" placeholder="Пароль">
+            <button class="btn-retro" id="auth-main-btn" onclick="submitAuth()">Войти</button>
+            <p id="status-msg"></p>
+        </div>
+    </div>
+</div>
+    <!-- Основной контент (размоется, пока нет авторизации) -->
+    <div id="main-site-content">
+        <div class="ticker-wrap">
+            <marquee scrollamount="5">
+                ДОБРО ПОЖАЛОВАТЬ НА MILLION PIXEL FARM • 1 ПИКСЕЛЬ = 1 КОИН • ФАРМИТЕ ДО 60 КОИНОВ В ДЕНЬ • РЕГИСТРИРУЙТЕСЬ, ЧТОБЫ СОХРАНИТЬ ПРОГРЕСС!
+            </marquee>
+        </div>
+
+        <header class="main-header">
+            <h1>THE MILLION PIXEL FARM</h1>
+            <p><i>Место, где каждый пиксель имеет значение.</i></p>
+        </header>
+
+        <div id="toolbar">
+            <div class="status-panel">
+                <span>БАЛАНС:</span>
+                <div id="balance" class="lcd-display">0000</div>
+                <span>КОИНОВ</span>
+            </div>
+
+            <div class="status-panel">
+                <span id="user-name" style="font-weight: bold; color: #000080;">[ГОСТЬ]</span>
+                <button class="btn-retro" onclick="location.reload()">Выйти</button>
+            </div>
+        </div>
+
+        <nav>
+            <a onclick="showMenu('buy')">Купить Область</a>
+            <a onclick="showMenu('top')">Топ Лидеров</a>
+            <a onclick="scrollToCanvas()">К Холсту</a>
+        </nav>
+
+        <main id="canvas-wrapper">
+            <canvas id="main-canvas" width="1000" height="1000"></canvas>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 THE MILLION PIXEL FARM. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+        </footer>
+    </div>
+
+    <script src="client.js"></script>
+</body>
+</html>
